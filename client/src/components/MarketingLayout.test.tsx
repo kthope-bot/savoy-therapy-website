@@ -105,7 +105,7 @@ describe("MarketingLayout", () => {
     expect(markup).toContain('href="#contact"');
     expect(markup).toContain('href="tel:2178988393"');
     expect(markup).toContain('href="/contact-report"');
-    expect(markup).toContain('src="/manus-storage/savoy-therapy-logo-enhanced_d9b32471.webp"');
+    expect(markup).toContain('src="/Savoy_Therapy_Logo_Enhanced.webp"');
     expect(markup).toContain('alt="Savoy Therapy"');
     expect(markup).toContain("Senior Living Therapy Partner");
     expect(markup).toContain("bg-[color:rgba(236,241,252,0.94)]");

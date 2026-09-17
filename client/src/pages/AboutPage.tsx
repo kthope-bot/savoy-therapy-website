@@ -54,7 +54,7 @@ export default function AboutPage() {
               <figure className="order-1 mx-auto flex shrink-0 flex-col items-center text-center lg:order-2 lg:mx-0 lg:w-[280px]">
                 <div className="relative h-[280px] w-[280px] overflow-hidden rounded-full border border-slate-900/10 bg-[#e2e8f0] shadow-[0_24px_70px_rgba(61,80,113,0.15)]">
                   <img
-                    src="/manus-storage/kris-thope-headshot_a436fc5f.png"
+                    src="/Kris_Thope_Headshot.png"
                     alt="Kishor Kris Thope, founder of Savoy Therapy"
                     className="absolute inset-0 h-full w-full object-cover object-[22%_center]"
                   />

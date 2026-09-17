@@ -550,7 +550,7 @@ export const downloadableResources: DownloadableResource[] = [
       "This guide gives you 10 practical, clinically proven strategies to reduce fall risk starting today.",
     audience: "Families and older adults",
     format: "Printable PDF",
-    href: "/manus-storage/guide1_fall_prevention_6bc71b09.pdf",
+    href: "/guide1_fall_prevention.pdf",
     accent: "bg-[#f7edd1]",
     bullets: [
       "10 practical fall-prevention strategies families can use right away",
@@ -566,7 +566,7 @@ export const downloadableResources: DownloadableResource[] = [
       "This guide helps you recognize the early warning signs — physical, functional, and behavioral — so you can act before it is too late.",
     audience: "Families and older adults",
     format: "Printable PDF",
-    href: "/manus-storage/guide2_warning_signs_c926c9ed.pdf",
+    href: "/guide2_warning_signs.pdf",
     accent: "bg-[#eef2fb]",
     bullets: [
       "Physical warning signs you can observe at home",
@@ -582,7 +582,7 @@ export const downloadableResources: DownloadableResource[] = [
       "A room-by-room guide to preventing falls at home.",
     audience: "Families and older adults",
     format: "Printable PDF",
-    href: "/manus-storage/guide3_home_safety_checklist_a8fad037.pdf",
+    href: "/guide3_home_safety_checklist.pdf",
     accent: "bg-[#edf6ef]",
     bullets: [
       "Room-by-room checklist for common fall hazards",
@@ -598,7 +598,7 @@ export const downloadableResources: DownloadableResource[] = [
       "This guide explains the different types of canes and walkers, who each is designed for, and what to look for when making a decision.",
     audience: "Families and caregivers",
     format: "Printable PDF",
-    href: "/manus-storage/guide4_walker_cane_guide_8bba8350.pdf",
+    href: "/guide4_walker_cane_guide.pdf",
     accent: "bg-white",
     bullets: [
       "Compares common cane and walker options",
@@ -614,7 +614,7 @@ export const downloadableResources: DownloadableResource[] = [
       "This guide explains what makes walkers different and how to choose the right one — or whether you need two.",
     audience: "Families and caregivers",
     format: "Printable PDF",
-    href: "/manus-storage/guide5_indoor_outdoor_walkers_44e8d9f9.pdf",
+    href: "/guide5_indoor_outdoor_walkers.pdf",
     accent: "bg-[#eef6f5]",
     bullets: [
       "Explains why indoor and outdoor surfaces change walker needs",

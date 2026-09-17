@@ -10,7 +10,7 @@ describe("About page", () => {
     expect(markup).toContain("Built on belief. Grounded in practice.");
     expect(markup).toContain("That belief hasn&#x27;t changed. It&#x27;s just grown.");
     expect(markup).toContain("My very first patient as a student was a man recovering from a stroke.");
-    expect(markup).toContain('/manus-storage/kris-thope-headshot_a436fc5f.png');
+    expect(markup).toContain('/Kris_Thope_Headshot.png');
     expect(markup).toContain("lg:flex-row lg:items-center lg:justify-between lg:gap-8");
     expect(markup).toContain("order-1 mx-auto flex shrink-0 flex-col items-center text-center lg:order-2");
     expect(markup).toContain("h-[280px] w-[280px]");

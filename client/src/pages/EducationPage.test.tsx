@@ -48,11 +48,11 @@ describe("EducationPage", () => {
   it("uses the five uploaded PDF files in shared Resources metadata", () => {
     expect(downloadableResources).toHaveLength(5);
     expect(downloadableResources.map((resource) => resource.href)).toEqual([
-      "/manus-storage/guide1_fall_prevention_6bc71b09.pdf",
-      "/manus-storage/guide2_warning_signs_c926c9ed.pdf",
-      "/manus-storage/guide3_home_safety_checklist_a8fad037.pdf",
-      "/manus-storage/guide4_walker_cane_guide_8bba8350.pdf",
-      "/manus-storage/guide5_indoor_outdoor_walkers_44e8d9f9.pdf",
+      "/guide1_fall_prevention.pdf",
+      "/guide2_warning_signs.pdf",
+      "/guide3_home_safety_checklist.pdf",
+      "/guide4_walker_cane_guide.pdf",
+      "/guide5_indoor_outdoor_walkers.pdf",
     ]);
   });
 });

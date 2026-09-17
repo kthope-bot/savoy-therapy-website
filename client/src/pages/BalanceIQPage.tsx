@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import { BadgeCheck, HeartPulse, ShieldCheck } from "lucide-react";
 
-const SAVOY_LOGO_URL = "/manus-storage/savoy-therapy-logo-enhanced_d9b32471.webp";
+const SAVOY_LOGO_URL = "/Savoy_Therapy_Logo_Enhanced.webp";
 const HIGHLEVEL_EMBED_SRC = "https://api.leadconnectorhq.com/widget/form/qUOCWrerHZR2Tp4kMDZu";
 const HIGHLEVEL_SCRIPT_SRC = "https://link.msgsndr.com/js/form_embed.js";
 const HIGHLEVEL_FORM_ID = "qUOCWrerHZR2Tp4kMDZu";

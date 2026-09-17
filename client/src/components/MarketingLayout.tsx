@@ -33,7 +33,7 @@ const interestOptions = [
   "Resources or general question",
 ];
 
-const SAVOY_LOGO_URL = "/manus-storage/savoy-therapy-logo-enhanced_d9b32471.webp";
+const SAVOY_LOGO_URL = "/Savoy_Therapy_Logo_Enhanced.webp";
 
 type MarketingLayoutProps = {
   children: React.ReactNode;
