@@ -1,4 +1,4 @@
-import React, { FormEvent, useState } from "react";
+import React, { FormEvent, useEffect, useRef, useState } from "react";
 import MarketingLayout from "@/components/MarketingLayout";
 import RecommendationQuizSection from "@/components/RecommendationQuizSection";
 import { downloadableResources, latestBlogPosts, type DownloadableResource } from "@/lib/siteContent";
@@ -37,6 +37,13 @@ export default function EducationPage() {
   const [activeResource, setActiveResource] = useState<DownloadableResource | null>(null);
   const [leadState, setLeadState] = useState<ResourceLeadState>(initialLeadState);
   const [submittedGuideSlug, setSubmittedGuideSlug] = useState<string | null>(null);
+
+  const gateRef = useRef<HTMLElement>(null);
+  useEffect(() => {
+    if (activeResource) {
+      gateRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
+    }
+  }, [activeResource]);
 
   const submitGuideLead = trpc.resources.submitLead.useMutation({
     onSuccess: () => {
@@ -169,7 +176,7 @@ export default function EducationPage() {
       </section>
 
       {activeResource ? (
-        <section className="pb-18 sm:pb-22">
+        <section ref={gateRef} className="scroll-mt-28 pb-18 sm:pb-22">
           <div className="container">
             <div className="rounded-[2.2rem] bg-[#f8fafc] p-7 shadow-[0_28px_80px_rgba(65,87,162,0.12)] ring-1 ring-[#cbd5e1] sm:p-10">
               <div className="flex flex-col gap-6 lg:flex-row lg:items-start lg:justify-between">
