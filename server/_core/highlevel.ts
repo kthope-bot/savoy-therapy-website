@@ -39,7 +39,10 @@ export function isUrgentInquiry(input: Pick<UrgentInquiryInput, "interest" | "me
   return /\b(urgent|asap|immediately|immediate|right away|same day|today|emergency)\b/.test(haystack);
 }
 
-export async function createUrgentInquiryTask(input: UrgentInquiryInput) {
+export async function syncContactToHighLevel(
+  input: UrgentInquiryInput,
+  options: { urgent: boolean },
+) {
   const { firstName, lastName } = splitName(input.fullName);
 
   const upsertResponse = await fetch(`${HIGHLEVEL_BASE_URL}/contacts/upsert`, {
@@ -63,16 +66,25 @@ export async function createUrgentInquiryTask(input: UrgentInquiryInput) {
     throw new Error(`HighLevel contact upsert failed: ${JSON.stringify(upsertPayload)}`);
   }
 
-  const dueDate = new Date(Date.now() + 60 * 60 * 1000).toISOString();
+  const contactId = upsertPayload.contact.id as string;
+
+  const dueOffsetMs = options.urgent ? 60 * 60 * 1000 : 24 * 60 * 60 * 1000;
+  const dueDate = new Date(Date.now() + dueOffsetMs).toISOString();
+  const title = options.urgent
+    ? `Urgent Savoy Therapy inquiry: ${input.fullName}`
+    : `New Savoy Therapy inquiry: ${input.fullName}`;
+
   const taskResponse = await fetch(
-    `${HIGHLEVEL_BASE_URL}/contacts/${upsertPayload.contact.id}/tasks`,
+    `${HIGHLEVEL_BASE_URL}/contacts/${contactId}/tasks`,
     {
       method: "POST",
       headers: getHeaders(),
       body: JSON.stringify({
-        title: `Urgent Savoy Therapy inquiry: ${input.fullName}`,
+        title,
         body: [
-          "A new urgent inquiry was submitted from the Savoy Therapy website.",
+          options.urgent
+            ? "A new URGENT inquiry was submitted from the Savoy Therapy website."
+            : "A new inquiry was submitted from the Savoy Therapy website.",
           `Name: ${input.fullName}`,
           `Email: ${input.email}`,
           `Phone: ${input.phone || "Not provided"}`,
@@ -94,7 +106,7 @@ export async function createUrgentInquiryTask(input: UrgentInquiryInput) {
   }
 
   return {
-    contactId: upsertPayload.contact.id as string,
+    contactId,
     taskId: taskPayload?.task?.id ?? null,
   };
 }

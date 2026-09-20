@@ -5,7 +5,7 @@ const createContactLeadMock = vi.fn();
 const createMobileShortcutEventMock = vi.fn();
 const getContactLeadReportMock = vi.fn();
 const notifyOwnerMock = vi.fn();
-const createUrgentInquiryTaskMock = vi.fn();
+const syncContactToHighLevelMock = vi.fn();
 
 vi.mock("./db", async () => {
   const actual = await vi.importActual<typeof import("./db")>("./db");
@@ -25,16 +25,20 @@ vi.mock("./_core/highlevel", async () => {
   const actual = await vi.importActual<typeof import("./_core/highlevel")>("./_core/highlevel");
   return {
     ...actual,
-    createUrgentInquiryTask: createUrgentInquiryTaskMock,
+    syncContactToHighLevel: syncContactToHighLevelMock,
   };
 });
 
 const { appRouter } = await import("./routers");
 
 describe("contact router", () => {
-  it("saves a public contact lead with lowercase email, source attribution, owner notification, and no urgent task for non-urgent inquiries", async () => {
+  it("saves a public contact lead with lowercase email, source attribution, owner notification, and syncs every inquiry to HighLevel", async () => {
     createContactLeadMock.mockResolvedValueOnce({ id: 12 });
     notifyOwnerMock.mockResolvedValueOnce(true);
+    syncContactToHighLevelMock.mockResolvedValueOnce({
+      contactId: "contact-12",
+      taskId: "task-12",
+    });
 
     const ctx = {
       user: null,
@@ -77,20 +81,31 @@ describe("contact router", () => {
         "Message: We would like to discuss adding therapy services.",
       ].join("\n"),
     });
-    expect(createUrgentInquiryTaskMock).not.toHaveBeenCalled();
+    expect(syncContactToHighLevelMock).toHaveBeenCalledWith(
+      {
+        fullName: "Kishor Patel",
+        email: "kishor@example.com",
+        phone: "217-555-0100",
+        organization: "Savoy Therapy",
+        interest: "Community partnership",
+        message: "We would like to discuss adding therapy services.",
+        sourcePage: "services",
+      },
+      { urgent: false },
+    );
     expect(result).toEqual({
       success: true,
       leadId: 12,
       ownerNotified: true,
       urgent: false,
-      urgentTaskCreated: false,
+      highLevelSynced: true,
     });
   });
 
   it("creates a HighLevel task for urgent inquiries", async () => {
     createContactLeadMock.mockResolvedValueOnce({ id: 16 });
     notifyOwnerMock.mockResolvedValueOnce(true);
-    createUrgentInquiryTaskMock.mockResolvedValueOnce({
+    syncContactToHighLevelMock.mockResolvedValueOnce({
       contactId: "contact-123",
       taskId: "task-789",
     });
@@ -114,21 +129,24 @@ describe("contact router", () => {
       sourcePage: "contact",
     });
 
-    expect(createUrgentInquiryTaskMock).toHaveBeenCalledWith({
-      fullName: "Carla Wheeler",
-      email: "carla@example.com",
-      phone: "217-355-1990",
-      organization: "Autumn Fields",
-      interest: "Urgent therapy support",
-      message: "Please call us back ASAP today about resident care coverage.",
-      sourcePage: "contact",
-    });
+    expect(syncContactToHighLevelMock).toHaveBeenCalledWith(
+      {
+        fullName: "Carla Wheeler",
+        email: "carla@example.com",
+        phone: "217-355-1990",
+        organization: "Autumn Fields",
+        interest: "Urgent therapy support",
+        message: "Please call us back ASAP today about resident care coverage.",
+        sourcePage: "contact",
+      },
+      { urgent: true },
+    );
     expect(result).toEqual({
       success: true,
       leadId: 16,
       ownerNotified: true,
       urgent: true,
-      urgentTaskCreated: true,
+      highLevelSynced: true,
     });
   });
 

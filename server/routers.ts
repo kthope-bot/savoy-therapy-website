@@ -1,7 +1,7 @@
 import { z } from "zod";
 import { COOKIE_NAME } from "../shared/const";
 import { getSessionCookieOptions } from "./_core/cookies";
-import { createUrgentInquiryTask, isUrgentInquiry } from "./_core/highlevel";
+import { isUrgentInquiry, syncContactToHighLevel } from "./_core/highlevel";
 import { notifyOwner } from "./_core/notification";
 import { systemRouter } from "./_core/systemRouter";
 import { protectedProcedure, publicProcedure, router } from "./_core/trpc";
@@ -123,15 +123,13 @@ export const appRouter = router({
         message: input.message || null,
       });
 
-      let urgentTaskCreated = false;
+      let highLevelSynced = false;
 
-      if (urgent) {
-        try {
-          await createUrgentInquiryTask(normalizedLead);
-          urgentTaskCreated = true;
-        } catch (error) {
-          console.error("[HighLevel urgent inquiry task error]", error);
-        }
+      try {
+        await syncContactToHighLevel(normalizedLead, { urgent });
+        highLevelSynced = true;
+      } catch (error) {
+        console.error("[HighLevel contact sync error]", error);
       }
 
       return {
@@ -139,7 +137,7 @@ export const appRouter = router({
         leadId: lead?.id ?? null,
         ownerNotified,
         urgent,
-        urgentTaskCreated,
+        highLevelSynced,
       } as const;
     }),
     recordMobileShortcut: publicProcedure.input(mobileShortcutEventSchema).mutation(async ({ input }) => {
