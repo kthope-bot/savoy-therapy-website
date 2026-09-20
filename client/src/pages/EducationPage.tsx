@@ -40,8 +40,8 @@ export default function EducationPage() {
 
   const gateRef = useRef<HTMLElement>(null);
   useEffect(() => {
-    if (activeResource) {
-      gateRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
+    if (activeResource && typeof gateRef.current?.scrollIntoView === "function") {
+      gateRef.current.scrollIntoView({ behavior: "smooth", block: "start" });
     }
   }, [activeResource]);
 
