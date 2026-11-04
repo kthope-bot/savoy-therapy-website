@@ -57,7 +57,6 @@ const legacyRedirectEntries = [
 
   // No new equivalent → /
   ["/workshops/", "/"],
-  ["/careers/", "/"],
   ["/faq/", "/"],
   ["/links/", "/"],
   ["/meal-service/", "/"],
