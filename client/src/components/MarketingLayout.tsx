@@ -24,6 +24,7 @@ const navigationItems = [
   { label: "Blog", href: "/blog" },
   { label: "Testimonials", href: "/testimonials" },
   { label: "Communities", href: "/communities" },
+  { label: "Careers", href: "/careers" },
 ];
 
 const interestOptions = [

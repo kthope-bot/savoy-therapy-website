@@ -7,6 +7,7 @@ import { Route, Switch, useLocation } from "wouter";
 import ErrorBoundary from "./components/ErrorBoundary";
 import { ThemeProvider } from "./contexts/ThemeContext";
 import AboutPage from "./pages/AboutPage";
+import CareersPage from "./pages/CareersPage";
 import BalanceIQPage from "./pages/BalanceIQPage";
 import BlogPage from "./pages/BlogPage";
 import BlogPostPage from "./pages/BlogPostPage";
@@ -54,6 +55,7 @@ function Router() {
     <Switch>
       <Route path="/" component={Home} />
       <Route path="/about" component={AboutPage} />
+      <Route path="/careers" component={CareersPage} />
       <Route path="/balanceiq" component={BalanceIQPage} />
       <Route path="/services" component={ServicesPage} />
       <Route path="/therapy-rockstars" component={TherapyRockstarsPage} />
