@@ -126,7 +126,7 @@ describe("Home page", () => {
       root.render(<Home />);
     });
 
-    expect(document.title).toBe("Savoy Therapy | Senior Living Therapy Partner");
+    expect(document.title).toBe("Savoy Therapy | Physical, Occupational & Speech Therapy");
     expect(document.title.length).toBeGreaterThanOrEqual(30);
     expect(document.title.length).toBeLessThanOrEqual(60);
 

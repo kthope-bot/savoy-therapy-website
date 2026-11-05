@@ -18,7 +18,7 @@ const initialChatMessages: ChatMessage[] = [
   },
 ];
 
-const HOME_SEO_TITLE = "Savoy Therapy | Senior Living Therapy Partner";
+const HOME_SEO_TITLE = "Savoy Therapy | Physical, Occupational & Speech Therapy";
 const HOME_SEO_DESCRIPTION =
   "Savoy Therapy provides physical, occupational, and speech therapy for senior living communities across Central Illinois.";
 const HOME_SEO_KEYWORDS =
