@@ -219,9 +219,6 @@ export default function MarketingLayout({
                 alt="Savoy Therapy"
                 className="h-11 w-auto max-w-[220px] object-contain sm:h-16 sm:max-w-[360px]"
               />
-              <div className="mt-1 pl-1 text-[0.62rem] uppercase tracking-[0.18em] text-[#4157A2]/82 sm:text-[0.72rem] sm:tracking-[0.22em]">
-                Senior Living Therapy Partner
-              </div>
             </a>
 
             <nav className="hidden items-center gap-8 text-[0.98rem] text-slate-700 xl:flex">

@@ -107,11 +107,9 @@ describe("MarketingLayout", () => {
     expect(markup).toContain('href="/contact-report"');
     expect(markup).toContain('src="/Savoy_Therapy_Logo_Enhanced.webp"');
     expect(markup).toContain('alt="Savoy Therapy"');
-    expect(markup).toContain("Senior Living Therapy Partner");
     expect(markup).toContain("bg-[color:rgba(236,241,252,0.94)]");
     expect(markup).toContain("flex flex-col gap-3 py-3 sm:flex-row sm:items-center sm:justify-between sm:gap-6 sm:py-4");
     expect(markup).toContain("h-11 w-auto max-w-[220px] object-contain sm:h-16 sm:max-w-[360px]");
-    expect(markup).toContain("text-[#4157A2]/82");
     expect(markup).toContain("w-full items-center gap-2 sm:w-auto xl:hidden");
     expect(markup).toContain("Menu");
     expect(markup).toContain("h-11 flex-[1.2] justify-center rounded-full bg-[#C0302D]");
