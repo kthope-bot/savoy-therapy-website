@@ -1,18 +1,10 @@
 import React, { FormEvent, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import {
-  Sheet,
-  SheetContent,
-  SheetDescription,
-  SheetHeader,
-  SheetTitle,
-  SheetTrigger,
-} from "@/components/ui/sheet";
 import { Textarea } from "@/components/ui/textarea";
 import { trackCtaClick, trackFormSubmission, trackGaEvent, trackPhoneTap } from "@/lib/analytics";
 import { trpc } from "@/lib/trpc";
-import { FileText, Menu, Phone, Trees, Users } from "lucide-react";
+import { FileText, Phone, Trees, Users } from "lucide-react";
 import { toast } from "sonner";
 
 const navigationItems = [
@@ -35,6 +27,11 @@ const interestOptions = [
 ];
 
 const SAVOY_LOGO_URL = "/Savoy_Therapy_Logo_Enhanced.webp";
+
+// "Join Our Team" destination: Gusto job posting (opens in a new tab).
+export const JOIN_TEAM_URL =
+  "https://jobs.gusto.com/postings/savoy-therapy-physical-therapist-assistant-a6c7d2ec-379e-4693-a859-8eee28464849";
+const joinTeamIsExternal = /^https?:\/\//.test(JOIN_TEAM_URL);
 
 type MarketingLayoutProps = {
   children: React.ReactNode;
@@ -64,7 +61,6 @@ export default function MarketingLayout({
   const [interest, setInterest] = useState(interestOptions[0]);
   const [message, setMessage] = useState("");
   const [submitted, setSubmitted] = useState(false);
-  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   const contactMutationFallback: {
     mutateAsync: (input: ContactLeadPayload) => Promise<{ success: boolean; leadId: number | null }>;
@@ -212,98 +208,58 @@ export default function MarketingLayout({
     <div className="min-h-screen bg-background text-foreground" onClickCapture={handleGlobalConversionClick}>
       <header className="sticky top-0 z-40 border-b border-[#4157A2]/10 bg-[color:rgba(236,241,252,0.94)] shadow-[0_8px_24px_rgba(65,87,162,0.06)] backdrop-blur-xl">
         <div className="container">
-          <div className="flex flex-col gap-3 py-3 sm:flex-row sm:items-center sm:justify-between sm:gap-6 sm:py-4">
-            <a href="/" className="min-w-0 text-left self-start">
+          <div className="flex items-center justify-between gap-3 py-3 sm:gap-6 sm:py-4">
+            <a href="/" className="min-w-0 shrink text-left">
               <img
                 src={SAVOY_LOGO_URL}
                 alt="Savoy Therapy"
-                className="h-11 w-auto max-w-[220px] object-contain sm:h-16 sm:max-w-[360px]"
+                className="h-10 w-auto max-w-[170px] object-contain sm:h-16 sm:max-w-[360px]"
               />
             </a>
 
-            <nav className="hidden items-center gap-8 text-[0.98rem] text-slate-700 xl:flex">
-              {navigationItems.map((item) => {
-                const isActive = currentPath === item.href;
-                return (
-                  <a
-                    key={item.href}
-                    className={`transition ${isActive ? "text-[#4157A2]" : "hover:text-[#4157A2]"}`}
-                    href={item.href}
-                  >
-                    {item.label}
-                  </a>
-                );
-              })}
-            </nav>
-
-            <div className="flex w-full items-center gap-2 sm:w-auto xl:hidden">
-              <Sheet open={mobileMenuOpen} onOpenChange={setMobileMenuOpen}>
-                <SheetTrigger asChild>
-                  <Button
-                    variant="outline"
-                    className="h-11 flex-1 rounded-full border-[#4157A2]/14 bg-white/84 text-[#4157A2] shadow-[0_10px_24px_rgba(65,87,162,0.08)] hover:bg-[#eef3ff] sm:flex-none sm:px-4"
-                  >
-                    <Menu className="mr-2 h-4 w-4" />
-                    Menu
-                  </Button>
-                </SheetTrigger>
-                <SheetContent side="left" className="w-[20rem] border-r border-[#4157A2]/10 bg-[#f7faff] px-5 [&>button]:hidden">
-                  <SheetHeader className="text-left">
-                    <SheetTitle className="text-[#0A1628]">Explore Savoy Therapy</SheetTitle>
-                    <SheetDescription className="text-slate-600">
-                      Choose a page below to keep key information accessible without crowding the mobile header.
-                    </SheetDescription>
-                  </SheetHeader>
-                  <nav className="mt-8 flex flex-col gap-3">
-                    {navigationItems.map((item) => {
-                      const isActive = currentPath === item.href;
-                      return (
-                        <a
-                          key={item.href}
-                          href={item.href}
-                          onClick={() => setMobileMenuOpen(false)}
-                          className={`rounded-[1.1rem] border px-4 py-3 text-[0.98rem] font-semibold transition ${
-                            isActive
-                              ? "border-[#4157A2]/18 bg-[#4157A2]/10 text-[#4157A2] shadow-[0_10px_24px_rgba(65,87,162,0.08)]"
-                              : "border-slate-900/8 bg-white text-slate-700 hover:border-[#4157A2]/18 hover:text-[#4157A2]"
-                          }`}
-                        >
-                          {item.label}
-                        </a>
-                      );
-                    })}
-                  </nav>
-                  <div className="mt-6 rounded-[1.35rem] border border-[#4157A2]/10 bg-white/90 p-4 shadow-[0_16px_40px_rgba(65,87,162,0.08)]">
-                    <div className="text-[0.78rem] font-semibold uppercase tracking-[0.16em] text-[#4157A2]">
-                      Quick next step
-                    </div>
-                    <p className="mt-2 text-[0.96rem] leading-7 text-slate-700">
-                      Prefer to talk now? Start an inquiry or call Savoy Therapy directly from the contact section.
-                    </p>
-                    <Button className="mt-4 h-11 w-full rounded-full bg-[#C0302D] text-white hover:bg-[#a52927]" asChild>
-                      <a href="#contact" data-analytics-placement="mobile_menu_cta" onClick={() => setMobileMenuOpen(false)}>
-                        Start a conversation
-                      </a>
-                    </Button>
-                  </div>
-                </SheetContent>
-              </Sheet>
-
+            <div className="flex shrink-0 items-center gap-2 sm:gap-3">
               <Button
-                className="h-11 flex-[1.2] justify-center rounded-full bg-[#C0302D] px-5 text-white shadow-[0_10px_30px_rgba(192,48,45,0.24)] transition hover:bg-[#a52927] sm:hidden"
+                className="h-10 rounded-full bg-[#0201FE] px-4 text-[0.92rem] font-semibold text-white shadow-[0_10px_30px_rgba(2,1,254,0.24)] transition hover:bg-[#0101C4] sm:h-11 sm:px-6 sm:text-[0.98rem]"
                 asChild
               >
-                <a href="#contact" data-analytics-placement="mobile_header_cta">Start a conversation</a>
+                <a
+                  href={JOIN_TEAM_URL}
+                  data-track-cta="true"
+                  data-analytics-placement="header_join_team"
+                  {...(joinTeamIsExternal ? { target: "_blank", rel: "noopener noreferrer" } : {})}
+                >
+                  Join Our Team
+                </a>
+              </Button>
+              <Button
+                className="hidden h-11 rounded-full bg-[#C0302D] px-6 text-white shadow-[0_10px_30px_rgba(192,48,45,0.24)] transition hover:bg-[#a52927] sm:inline-flex"
+                asChild
+              >
+                <a href="#contact" data-analytics-placement="desktop_header_cta">Start a conversation</a>
               </Button>
             </div>
-
-            <Button
-              className="hidden w-full justify-center rounded-full bg-[#C0302D] px-6 text-white shadow-[0_10px_30px_rgba(192,48,45,0.24)] transition hover:bg-[#a52927] sm:w-auto xl:inline-flex"
-              asChild
-            >
-              <a href="#contact" data-analytics-placement="desktop_header_cta">Start a conversation</a>
-            </Button>
           </div>
+
+          <nav
+            aria-label="Main"
+            className="flex gap-1 overflow-x-auto border-t border-[#4157A2]/10 py-2 text-[0.95rem] [scrollbar-width:none] lg:justify-center [&::-webkit-scrollbar]:hidden"
+          >
+            {navigationItems.map((item) => {
+              const isActive = currentPath === item.href;
+              return (
+                <a
+                  key={item.href}
+                  href={item.href}
+                  aria-current={isActive ? "page" : undefined}
+                  className={`shrink-0 whitespace-nowrap rounded-full px-3 py-1.5 transition ${
+                    isActive ? "bg-[#4157A2]/10 font-semibold text-[#4157A2]" : "text-slate-700 hover:text-[#4157A2]"
+                  }`}
+                >
+                  {item.label}
+                </a>
+              );
+            })}
+          </nav>
         </div>
       </header>
 

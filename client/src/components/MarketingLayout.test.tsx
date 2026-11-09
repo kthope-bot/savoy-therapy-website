@@ -108,11 +108,18 @@ describe("MarketingLayout", () => {
     expect(markup).toContain('src="/Savoy_Therapy_Logo_Enhanced.webp"');
     expect(markup).toContain('alt="Savoy Therapy"');
     expect(markup).toContain("bg-[color:rgba(236,241,252,0.94)]");
-    expect(markup).toContain("flex flex-col gap-3 py-3 sm:flex-row sm:items-center sm:justify-between sm:gap-6 sm:py-4");
-    expect(markup).toContain("h-11 w-auto max-w-[220px] object-contain sm:h-16 sm:max-w-[360px]");
-    expect(markup).toContain("w-full items-center gap-2 sm:w-auto xl:hidden");
-    expect(markup).toContain("Menu");
-    expect(markup).toContain("h-11 flex-[1.2] justify-center rounded-full bg-[#C0302D]");
+    expect(markup).toContain('href="/careers"');
+    expect(markup).toContain('aria-label="Main"');
+    expect(markup).toContain('aria-current="page"');
+    expect(markup).toContain("overflow-x-auto");
+    expect(markup).not.toContain("xl:hidden");
+    expect(markup).not.toContain(">Menu<");
+    expect(markup).toContain("Join Our Team");
+    expect(markup).toContain('href="https://jobs.gusto.com/postings/savoy-therapy-physical-therapist-assistant-a6c7d2ec-379e-4693-a859-8eee28464849"');
+    expect(markup).toContain('target="_blank"');
+    expect(markup).toContain('data-analytics-placement="header_join_team"');
+    expect(markup).toContain("bg-[#0201FE]");
+    expect(markup).toContain("h-10 w-auto max-w-[170px] object-contain sm:h-16 sm:max-w-[360px]");
     expect(markup).toContain("Call now");
     expect(markup).toContain("Start inquiry");
     expect(markup).toContain("bg-[#4157A2] px-4 text-[0.95rem] font-semibold text-white");
@@ -122,7 +129,7 @@ describe("MarketingLayout", () => {
     expect(markup).toContain("bg-[#C0302D]");
   });
 
-  it("opens the expandable mobile menu and records mobile shortcut clicks", async () => {
+  it("shows every nav link in the header at all sizes and records mobile shortcut clicks", async () => {
     await act(async () => {
       root.render(
         <MarketingLayout currentPath="/services">
@@ -131,15 +138,12 @@ describe("MarketingLayout", () => {
       );
     });
 
-    const menuButton = Array.from(container.querySelectorAll("button")).find(button => button.textContent?.includes("Menu"));
     const callShortcut = container.querySelector('div.fixed a[href="tel:2178988393"]') as HTMLAnchorElement;
     const inquiryShortcut = container.querySelector('div.fixed a[href="#contact"]') as HTMLAnchorElement;
 
-    await act(async () => {
-      menuButton?.dispatchEvent(new window.MouseEvent("click", { bubbles: true }));
-    });
-
-    expect(document.body.textContent).toContain("Explore Savoy Therapy");
+    const headerNavLinks = container.querySelectorAll('header nav[aria-label="Main"] a');
+    expect(headerNavLinks.length).toBe(9);
+    expect(container.querySelector('header a[href="/services"]')?.getAttribute("aria-current")).toBe("page");
 
     callShortcut.addEventListener("click", event => event.preventDefault());
     inquiryShortcut.addEventListener("click", event => event.preventDefault());
