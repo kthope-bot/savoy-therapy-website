@@ -1,9 +1,9 @@
 import React from "react";
-import MarketingLayout from "@/components/MarketingLayout";
+import MarketingLayout, { JOIN_TEAM_URL } from "@/components/MarketingLayout";
 
-const CAREERS_EMAIL = "kthope@savoytherapy.com";
-const APPLY_MAILTO = `mailto:${CAREERS_EMAIL}?subject=Savoy%20Therapy%20Career%20Application`;
-// When Gusto job postings go live, add the posting's public link as a second CTA.
+// Applications go through Gusto. The link is shared with the header's "Join Our Team" button
+// (JOIN_TEAM_URL in MarketingLayout.tsx), so updating it there updates this page too.
+const APPLY_URL = JOIN_TEAM_URL;
 
 const reasons = [
   {
@@ -68,17 +68,16 @@ export default function CareersPage() {
             </p>
             <div className="mt-10 flex flex-col gap-4 sm:flex-row sm:items-center sm:gap-5">
               <a
-                href={APPLY_MAILTO}
+                href={APPLY_URL}
+                target="_blank"
+                rel="noopener noreferrer"
+                data-track-cta="true"
+                data-analytics-placement="careers_hero_apply"
                 className="inline-flex items-center justify-center gap-3 rounded-full bg-[#C0302D] px-7 py-3.5 text-[1rem] font-semibold text-white shadow-[0_14px_40px_rgba(192,48,45,0.2)] transition hover:bg-[#a52927]"
               >
-                Email your resume
+                Apply now
               </a>
-              <p className="text-[0.98rem] text-slate-600">
-                or write to{" "}
-                <a href={APPLY_MAILTO} className="font-semibold text-[#4157A2] transition hover:text-[#30406f]">
-                  {CAREERS_EMAIL}
-                </a>
-              </p>
+              <p className="text-[0.98rem] text-slate-600">Quick online application through Gusto.</p>
             </div>
           </div>
         </div>
@@ -108,7 +107,7 @@ export default function CareersPage() {
           <div className="section-label">Roles we hire</div>
           <p className="section-copy mt-5 max-w-2xl">
             We hire Physical, Occupational, and Speech therapists and assistants for full-time and PRN roles.
-            Tell us which one fits — send your resume and a short note, and a member of our team will follow up.
+            Apply online in a few minutes, and a member of our team will follow up.
           </p>
           <div className="mt-8 grid gap-6 lg:grid-cols-3">
             {roles.map((role) => (
@@ -138,12 +137,16 @@ export default function CareersPage() {
             </ul>
             <div className="mt-9 flex flex-col gap-3 sm:flex-row sm:items-center sm:gap-5">
               <a
-                href={APPLY_MAILTO}
+                href={APPLY_URL}
+                target="_blank"
+                rel="noopener noreferrer"
+                data-track-cta="true"
+                data-analytics-placement="careers_footer_apply"
                 className="inline-flex items-center justify-center gap-3 rounded-full bg-[#C0302D] px-7 py-3.5 text-[1rem] font-semibold text-white shadow-[0_14px_40px_rgba(192,48,45,0.2)] transition hover:bg-[#a52927]"
               >
-                Email your resume
+                Apply now
               </a>
-              <span className="text-[0.95rem] text-slate-600">We read every one.</span>
+              <span className="text-[0.95rem] text-slate-600">We read every application.</span>
             </div>
           </div>
         </div>
